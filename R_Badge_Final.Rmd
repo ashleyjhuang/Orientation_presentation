@@ -1,0 +1,209 @@
+---
+title: "R_Badge"
+output: html_document
+date: "2024-06-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=F}
+# load libraries
+
+library(tidyverse)
+```
+
+
+## Project Euler Code 
+
+### Task 1:
+
+```{r}
+multiple3 <- seq(3,999,3)
+multiple5 <- seq(5,999,5)
+
+q1 <- sum(multiple3) + sum(multiple5)
+q1
+```
+
+### Task 2:
+
+```{r}
+a <- 1
+b <- 2
+sum <- 0
+
+while (b<=4000000){
+  if (b%%2==0){
+    sum <- sum+b
+  }
+  
+  next_num <- a+b
+  a <- b
+  b <- next_num
+}
+
+print(sum)
+```
+
+### Task 3:
+
+```{r}
+prime_factors <- function(n){
+  largest<- 1
+
+  while(n%%2==0){
+    largest<-2
+    n <- n / 2
+    }
+
+  odd_factors <- 3
+  max_factor <- sqrt(n)
+  while(odd_factors <= max_factor){
+    while (n %% odd_factors == 0) {
+      largest <- odd_factors
+      n <- n / odd_factors
+      max_factor <- sqrt(n)
+    }
+    odd_factors <- odd_factors + 2
+    }
+if (n > 2) {
+    largest <- n
+}
+return(largest)
+}
+
+prime_factors(600851475143)
+```
+## Distribution Histograms
+
+### Uniform
+```{r}
+udata <- runif(10)
+u_df <- data.frame(udata = udata)
+
+ggplot(u_df, aes(x=udata)) +
+  geom_histogram(fill="Magenta", color="black", bins=7) +
+  labs(x="Value", y="Frequency", title="Histogram of Uniform Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### Poisson
+
+```{r}
+pdata <- rpois(10, 5)
+p_df <- data.frame(pdata = pdata)
+
+ggplot(u_df, aes(x=pdata)) +
+  geom_histogram(fill="Chartreuse3", color="black", bins=7) +
+  labs(x="Value", y="Frequency", title="Histogram of Poisson Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### Normal
+
+```{r}
+rdata <- rnorm(10)
+r_df <- data.frame(rdata = rdata)
+
+ggplot(r_df, aes(x=rdata)) +
+  geom_histogram(fill="skyblue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of Normal Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## Binomial and Normal Convergence
+
+```{r}
+# binomial distribution
+
+rdata1 <- rbinom(10, 10, 0.5)
+rdf1 <- data.frame(rdata1 = rdata1)
+
+rdata2 <- rbinom(100, 10, 0.5)
+rdf2 <- data.frame(rdata2 = rdata2)
+
+rdata3 <- rbinom(1000, 10, 0.5)
+rdf3 <- data.frame(rdata3 = rdata3)
+
+ggplot(rdf1, aes(x=rdata1)) +
+  geom_histogram(fill="blue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 10 Samples From the Binomial Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(rdf2, aes(x=rdata2)) +
+  geom_histogram(fill="blue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 100 Samples From the Binomial Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(rdf3, aes(x=rdata3)) +
+  geom_histogram(fill="blue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 1000 Samples From the Binomial Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+# normal distribution
+
+ndata1 <- rnorm(10, 10, 0.5)
+ndf1 <- data.frame(ndata1 = ndata1)
+
+ndata2 <- rnorm(100, 10, 0.5)
+ndf2 <- data.frame(ndata2 = ndata2)
+
+ndata3 <- rnorm(1000, 10, 0.5)
+ndf3 <- data.frame(ndata3 = ndata3)
+
+ggplot(ndf1, aes(x=ndata1)) +
+  geom_histogram(fill="skyblue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 10 Samples From the Normal Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(ndf2, aes(x=ndata2)) +
+  geom_histogram(fill="skyblue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 100 Samples From the Normal Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(ndf3, aes(x=ndata3)) +
+  geom_histogram(fill="skyblue", color="black", bins=9) +
+  labs(x="Value", y="Frequency", title="Histogram of 1000 Samples From the Normal Distribution Frequencies") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+We can see from both the normal and binomial distributions that as sample size increases, the distribution shape becomes more bell-shaped. 
+
+For the binomial distribution, increasing the sample size will result in a more bell-shaped distribution. Additionally, the probability of success (p) in the binomial number generator is 0.5, which would also help give the distribution it's traditional bell-shaped distribution centered in the middle of the graph.
+
+For the normal distribution, we see that increasing the sample size also created a more bell-shaped distribution. As more samples are taken, the shape of the histogram reflects the true shape of the normal distribution with the specified arguments applied.
+
+## Class Survey Data
+
+```{r}
+class_data <- read.csv("MSDS_survey.csv")
+
+ggplot(class_data, aes(x=RAM..in.GB.)) +
+  geom_histogram(fill="Red", color="black") +
+  labs(x="RAM", y="Count", title="Histogram of RAM Storage Distribution") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+  
+ggplot(class_data, aes(x=CPU.Number.of.Cores..int.)) +
+  geom_histogram(fill="light grey", color="black") +
+  labs(x="Number of Cores", y="Count", title="Histogram of Number of Cores") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+Some variables in the data set were not quantitative, continuous variables. Therefore, the distributions of those particular variables could not be shown by a histogram. Examples of these variables are the Github username variable and the operating system variable, among others.
